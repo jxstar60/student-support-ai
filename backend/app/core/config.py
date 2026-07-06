@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     app_version: str = "0.1.0"
     environment: str = "development"
     database_url: str = "sqlite:///./student_support_ai.db"
+    openai_api_key: str | None = None
+    openai_model: str = "gpt-4o-mini"
     backend_cors_origins: str = (
         "http://localhost:5173,http://127.0.0.1:5173"
     )
