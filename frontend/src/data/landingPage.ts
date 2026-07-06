@@ -1,10 +1,10 @@
 export const navItems = [
-  "首页",
-  "生活指南",
-  "在留手续",
-  "打工",
-  "奖学金",
-  "常见问题"
+  { label: "首页", href: "/" },
+  { label: "生活指南", href: "/life" },
+  { label: "在留手续", href: "/visa" },
+  { label: "打工", href: "/work" },
+  { label: "奖学金", href: "/scholarship" },
+  { label: "常见问题", href: "/faq" }
 ];
 
 export const languages = ["中文", "日本語", "English"];
@@ -12,26 +12,32 @@ export const languages = ["中文", "日本語", "English"];
 export const featureItems = [
   {
     title: "在留手续",
+    href: "/visa",
     description: "整理签证更新、资格外活动许可、住所变更等常见办理入口。"
   },
   {
     title: "生活指南",
+    href: "/life",
     description: "汇总住房、交通、手机、银行开户等来日初期生活信息。"
   },
   {
     title: "打工",
+    href: "/work",
     description: "了解留学生打工时间限制、常见行业和注意事项。"
   },
   {
     title: "奖学金",
+    href: "/scholarship",
     description: "集中查看奖学金申请条件、材料准备和时间节点。"
   },
   {
     title: "医疗保险",
+    href: "/insurance",
     description: "说明国民健康保险、就诊流程和医疗费用负担方式。"
   },
   {
     title: "税金",
+    href: "/insurance",
     description: "介绍住民税、所得税、年末调整等基础税务信息。"
   }
 ];

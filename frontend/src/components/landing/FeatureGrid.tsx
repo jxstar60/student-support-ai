@@ -6,6 +6,7 @@ import {
   Home,
   Landmark
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { featureItems } from "../../data/landingPage";
 
 const icons = [
@@ -33,9 +34,9 @@ export function FeatureGrid() {
             const Icon = icons[index];
 
             return (
-              <a
+              <Link
                 key={item.title}
-                href="#"
+                to={item.href}
                 className="group rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:border-[#0b3a6f] hover:shadow-md"
               >
                 <div className="flex items-start gap-4">
@@ -51,7 +52,7 @@ export function FeatureGrid() {
                     </p>
                   </div>
                 </div>
-              </a>
+              </Link>
             );
           })}
         </div>

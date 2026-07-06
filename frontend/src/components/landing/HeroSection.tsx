@@ -1,4 +1,5 @@
 import { ArrowRight, Landmark, SearchCheck } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function HeroSection() {
   return (
@@ -16,19 +17,19 @@ export function HeroSection() {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#consult"
+            <Link
+              to="/chat"
               className="inline-flex items-center justify-center gap-2 rounded-md bg-[#0b3a6f] px-5 py-3 text-sm font-semibold text-white hover:bg-[#082d58]"
             >
               开始咨询
               <ArrowRight size={18} aria-hidden="true" />
-            </a>
-            <a
-              href="#guides"
+            </Link>
+            <Link
+              to="/life"
               className="inline-flex items-center justify-center rounded-md border border-[#0b3a6f] px-5 py-3 text-sm font-semibold text-[#0b3a6f] hover:bg-slate-50"
             >
               浏览生活指南
-            </a>
+            </Link>
           </div>
         </div>
 
