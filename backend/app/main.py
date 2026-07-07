@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from app.core.config import settings
 from app.core.cors import configure_cors
+from app.db.database import init_db
 from app.presentation.api.router import api_router
 
 
@@ -15,6 +16,7 @@ def create_app() -> FastAPI:
     )
 
     configure_cors(app)
+    init_db()
     app.include_router(api_router)
 
     return app

@@ -2,12 +2,19 @@ import type { ChatMessage } from "../../types/chat";
 
 type ChatMessageBubbleProps = {
   message: ChatMessage;
+  feedbackStatus?: string;
+  onFeedback?: (messageId: string, rating: "up" | "down") => void;
 };
 
-export function ChatMessageBubble({ message }: ChatMessageBubbleProps) {
+export function ChatMessageBubble({
+  message,
+  feedbackStatus,
+  onFeedback
+}: ChatMessageBubbleProps) {
   const isUser = message.role === "user";
   const references = message.references?.slice(0, 3) ?? [];
   const hasReferences = message.role === "assistant" && references.length > 0;
+  const canSubmitFeedback = message.role === "assistant" && Boolean(message.source);
 
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
@@ -52,6 +59,33 @@ export function ChatMessageBubble({ message }: ChatMessageBubbleProps) {
                 </article>
               ))}
             </div>
+          </div>
+        ) : null}
+
+        {canSubmitFeedback ? (
+          <div className="mt-4 border-t border-slate-200 pt-3">
+            {feedbackStatus ? (
+              <p className="text-xs font-semibold text-emerald-700">
+                感谢您的反馈。
+              </p>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => onFeedback?.(message.id, "up")}
+                  className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-[#0b3a6f] hover:text-[#0b3a6f]"
+                >
+                  👍 有帮助
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onFeedback?.(message.id, "down")}
+                  className="rounded-md border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-[#0b3a6f] hover:text-[#0b3a6f]"
+                >
+                  👎 无帮助
+                </button>
+              </div>
+            )}
           </div>
         ) : null}
       </div>

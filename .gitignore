@@ -18,6 +18,7 @@ htmlcov/
 !.env.example
 backend/.env
 *.db
+backend/app/data/app.db
 *.sqlite
 *.sqlite3
 

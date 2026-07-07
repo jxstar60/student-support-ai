@@ -34,6 +34,12 @@ export function Footer() {
           >
             知识库管理
           </Link>
+          <Link
+            to="/admin/dashboard"
+            className="font-semibold text-white hover:underline"
+          >
+            数据统计
+          </Link>
         </nav>
       </div>
     </footer>

@@ -3,6 +3,7 @@ import { Layout } from "../components/layout/Layout";
 import { ChatPage } from "../pages/ChatPage";
 import { EmergencyPage } from "../pages/EmergencyPage";
 import { FAQPage } from "../pages/FAQPage";
+import { DashboardPage } from "../pages/DashboardPage";
 import { HomePage } from "../pages/HomePage";
 import { InsurancePage } from "../pages/InsurancePage";
 import { KnowledgeAdminPage } from "../pages/KnowledgeAdminPage";
@@ -28,6 +29,7 @@ export function AppRouter() {
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/admin/knowledge" element={<KnowledgeAdminPage />} />
+          <Route path="/admin/dashboard" element={<DashboardPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

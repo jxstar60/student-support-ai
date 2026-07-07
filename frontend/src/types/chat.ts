@@ -18,22 +18,45 @@ export type Reference = {
 
 export type ChatSource = "knowledge";
 
+export type ChatSession = {
+  id: string;
+  title: string;
+  created_at: string;
+  updated_at?: string;
+};
+
 export type ChatMessage = {
   id: string;
+  session_id: string;
   role: ChatRole;
   content: string;
+  category?: string;
   source?: ChatSource;
+  created_at: string;
   references?: Reference[];
+};
+
+export type ChatSessionDetail = ChatSession & {
+  messages: ChatMessage[];
 };
 
 export type SendChatMessageParams = {
   message: string;
   category: ChatCategory | null;
   language: "zh";
+  session_id?: string | null;
 };
 
 export type ChatResponse = {
+  session_id: string;
+  message_id: string;
   reply: string;
   source: ChatSource;
   references: Reference[];
+};
+
+export type FeedbackRequest = {
+  message_id: string;
+  rating: "up" | "down";
+  comment?: string;
 };
