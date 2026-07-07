@@ -17,6 +17,44 @@ Student Support AI 是一个面向在日外国留学生的 AI 生活支援系统
 - PDF/TXT 官方资料导入
 - 参考资料显示
 
+## Screenshots
+
+### Home Page
+
+![Home Page](docs/images/home.png)
+
+首页采用政府门户网站风格，提供清晰的信息分区、导航入口和面向留学生的服务分类。用户可以从首页快速进入生活指南、在留手续、打工、奖学金等核心模块。
+
+### AI Consultation
+
+![AI Consultation](docs/images/chat.png)
+
+AI 咨询页面提供分类选择、聊天输入、历史会话和使用注意事项。当前版本基于本地知识库检索生成回复，不依赖外部 AI API。
+
+### Knowledge-based Answer with References
+
+![Knowledge-based Answer](docs/images/chat-reference.png)
+
+系统会在回答下方展示参考资料卡片，帮助用户理解回答依据。回答正文与来源信息分离，便于后续扩展为更完整的 RAG 引用体系。
+
+### Knowledge Base Admin
+
+![Knowledge Admin](docs/images/knowledge-admin.png)
+
+知识库管理后台支持按分类和关键词筛选知识条目，并提供新增、编辑、删除能力。该页面用于维护本地 JSON 知识库内容。
+
+### Official Document Import
+
+![Document Import](docs/images/document-import.png)
+
+官方资料导入页面支持上传 PDF/TXT 文件，并将可解析文本切分为知识库条目。导入后的内容可以被聊天页面检索并作为参考资料展示。
+
+### Admin Dashboard
+
+![Admin Dashboard](docs/images/dashboard.png)
+
+数据统计后台展示咨询数、消息数、知识库条目数、上传文档数、用户反馈和分类咨询统计。该页面用于作品集演示系统使用情况和管理闭环。
+
 ## 技术栈
 
 Frontend: React, TypeScript, Vite, Tailwind CSS, React Router
