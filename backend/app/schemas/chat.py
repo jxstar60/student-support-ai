@@ -7,6 +7,13 @@ class ChatRequest(BaseModel):
     language: str = "zh"
 
 
+class Reference(BaseModel):
+    title: str
+    source_name: str
+    source_url: str
+
+
 class ChatResponse(BaseModel):
     reply: str
     source: str
+    references: list[Reference] = Field(default_factory=list)

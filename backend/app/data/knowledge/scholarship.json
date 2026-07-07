@@ -1,0 +1,29 @@
+[
+  {
+    "id": "scholarship_001",
+    "category": "奖学金",
+    "title": "奖学金信息来源",
+    "content": "留学生可通过学校、JASSO、地方自治体和民间财团等渠道查询奖学金信息。申请条件、金额、期限和选考方式各不相同，请以募集要项为准。",
+    "source_name": "JASSO",
+    "source_url": "https://www.jasso.go.jp/",
+    "keywords": ["奖学金", "JASSO", "募集", "申请", "财团"]
+  },
+  {
+    "id": "scholarship_002",
+    "category": "奖学金",
+    "title": "申请材料准备",
+    "content": "奖学金申请材料可能包括申请书、成绩证明、推荐信、在学证明、研究计划或生活情况说明。材料要求因项目不同而不同，请确认学校或募集机构说明。",
+    "source_name": "学校学生支援部门",
+    "source_url": "https://www.jasso.go.jp/",
+    "keywords": ["申请材料", "成绩", "推荐信", "在学证明", "研究计划"]
+  },
+  {
+    "id": "scholarship_003",
+    "category": "奖学金",
+    "title": "校内推荐流程",
+    "content": "部分奖学金需要先通过学校内部选考或推荐。建议留意学校公告、提交期限和面试安排，避免错过申请时间。",
+    "source_name": "学校学生支援部门",
+    "source_url": "https://www.jasso.go.jp/",
+    "keywords": ["校内推荐", "内部选考", "期限", "面试", "学校公告"]
+  }
+]

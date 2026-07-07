@@ -10,10 +10,20 @@ export type ChatCategory =
 
 export type ChatRole = "user" | "assistant";
 
+export type Reference = {
+  title: string;
+  source_name: string;
+  source_url: string;
+};
+
+export type ChatSource = "knowledge";
+
 export type ChatMessage = {
   id: string;
   role: ChatRole;
   content: string;
+  source?: ChatSource;
+  references?: Reference[];
 };
 
 export type SendChatMessageParams = {
@@ -22,7 +32,8 @@ export type SendChatMessageParams = {
   language: "zh";
 };
 
-export type ChatApiResponse = {
+export type ChatResponse = {
   reply: string;
-  source: "mock" | "openai" | string;
+  source: ChatSource;
+  references: Reference[];
 };

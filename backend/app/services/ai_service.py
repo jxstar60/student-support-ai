@@ -1,29 +1,13 @@
-from openai import OpenAI
+from typing import Any
 
-from app.core.config import settings
-
-SYSTEM_PROMPT = """
-你是 Student Support AI，一个面向在日外国留学生的生活支援助手。
-你的回答需要清晰、礼貌、谨慎。
-你可以回答在留手续、生活指南、打工、奖学金、医疗保险、税金、学校生活、紧急支援等问题。
-如果涉及正式手续、法律、签证、医疗、税务等内容，请提醒用户以官方机构发布的信息为准。
-不要要求用户输入护照号码、在留卡号码、密码等个人敏感信息。
-请使用用户选择的语言回答。
-""".strip()
-
-MOCK_REPLY = (
-    "这是模拟回复。之后系统将接入 AI 模型和官方知识库，"
-    "为您提供更准确的回答。"
+NO_MATCH_REPLY = (
+    "当前知识库中没有找到完全匹配的信息。"
+    "建议您确认学校、自治体或相关官方机构发布的信息。"
 )
 
 
 class AIService:
-    """Small wrapper around the OpenAI client with a mock fallback."""
-
-    def __init__(self) -> None:
-        self.api_key = settings.openai_api_key
-        self.model = settings.openai_model
-        self.client = OpenAI(api_key=self.api_key) if self.api_key else None
+    """Local knowledge answer generator used by the RAG demo."""
 
     def generate_reply(
         self,
@@ -31,28 +15,21 @@ class AIService:
         message: str,
         category: str | None,
         language: str,
+        knowledge_items: list[dict[str, Any]],
     ) -> tuple[str, str]:
-        if self.client is None:
-            return MOCK_REPLY, "mock"
+        if not knowledge_items:
+            return NO_MATCH_REPLY, "knowledge"
 
-        category_text = category or "未选择"
-        user_prompt = (
-            f"咨询分类：{category_text}\n"
-            f"回答语言：{language}\n"
-            f"用户问题：{message}"
+        primary_item = knowledge_items[0]
+        content = str(primary_item.get("content", "")).strip()
+
+        reply = (
+            f"根据当前知识库，{content}\n\n"
+            "不同学校、地区和个人情况可能存在差异，"
+            "建议以官方机构、自治体或学校发布的信息为准。"
         )
 
-        completion = self.client.chat.completions.create(
-            model=self.model,
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user_prompt},
-            ],
-            temperature=0.2,
-        )
-
-        reply = completion.choices[0].message.content or MOCK_REPLY
-        return reply, "openai"
+        return reply, "knowledge"
 
 
 ai_service = AIService()

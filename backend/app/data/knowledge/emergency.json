@@ -1,0 +1,29 @@
+[
+  {
+    "id": "emergency_001",
+    "category": "紧急支援",
+    "title": "急病或受伤",
+    "content": "急病、严重受伤或有生命危险时，应优先联系急救服务或附近医疗机构。非紧急情况可咨询学校、保险窗口或医疗咨询服务。",
+    "source_name": "厚生劳动省",
+    "source_url": "https://www.mhlw.go.jp/",
+    "keywords": ["急病", "受伤", "急救", "医院", "紧急"]
+  },
+  {
+    "id": "emergency_002",
+    "category": "紧急支援",
+    "title": "证件遗失",
+    "content": "护照、在留卡或学生证遗失时，建议尽快联系警察、学校和相关机关确认补办流程。不同证件的手续和材料不同，请以官方说明为准。",
+    "source_name": "出入国在留管理厅",
+    "source_url": "https://www.moj.go.jp/isa/",
+    "keywords": ["遗失", "护照", "在留卡", "学生证", "补办"]
+  },
+  {
+    "id": "emergency_003",
+    "category": "紧急支援",
+    "title": "自然灾害时的行动",
+    "content": "地震、台风等自然灾害发生时，应确认自治体、学校和公共交通发布的信息，并优先保证人身安全。避难场所和支援信息请以当地官方发布为准。",
+    "source_name": "地方自治体",
+    "source_url": "https://www.bousai.go.jp/",
+    "keywords": ["地震", "台风", "灾害", "避难", "安全"]
+  }
+]

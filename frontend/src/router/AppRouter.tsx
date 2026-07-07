@@ -5,6 +5,7 @@ import { EmergencyPage } from "../pages/EmergencyPage";
 import { FAQPage } from "../pages/FAQPage";
 import { HomePage } from "../pages/HomePage";
 import { InsurancePage } from "../pages/InsurancePage";
+import { KnowledgeAdminPage } from "../pages/KnowledgeAdminPage";
 import { LifeGuidePage } from "../pages/LifeGuidePage";
 import { ScholarshipPage } from "../pages/ScholarshipPage";
 import { SchoolPage } from "../pages/SchoolPage";
@@ -26,6 +27,7 @@ export function AppRouter() {
           <Route path="/emergency" element={<EmergencyPage />} />
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/chat" element={<ChatPage />} />
+          <Route path="/admin/knowledge" element={<KnowledgeAdminPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

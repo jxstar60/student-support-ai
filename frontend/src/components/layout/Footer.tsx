@@ -1,4 +1,11 @@
-const footerLinks = ["隐私政策", "联系我们", "使用说明", "网站地图"];
+import { Link } from "react-router-dom";
+
+const footerLinks = [
+  { label: "隐私政策", href: "#" },
+  { label: "联系我们", href: "#" },
+  { label: "使用说明", href: "#" },
+  { label: "网站地图", href: "#" }
+];
 
 export function Footer() {
   return (
@@ -13,10 +20,20 @@ export function Footer() {
 
         <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-200">
           {footerLinks.map((link) => (
-            <a key={link} href="#" className="hover:text-white hover:underline">
-              {link}
+            <a
+              key={link.label}
+              href={link.href}
+              className="hover:text-white hover:underline"
+            >
+              {link.label}
             </a>
           ))}
+          <Link
+            to="/admin/knowledge"
+            className="font-semibold text-white hover:underline"
+          >
+            知识库管理
+          </Link>
         </nav>
       </div>
     </footer>

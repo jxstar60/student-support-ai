@@ -1,10 +1,10 @@
-import type { ChatApiResponse, SendChatMessageParams } from "../types/chat";
+import type { ChatResponse, SendChatMessageParams } from "../types/chat";
 
 const CHAT_API_URL = "http://127.0.0.1:8000/api/chat";
 
 export async function sendChatMessage(
   params: SendChatMessageParams
-): Promise<ChatApiResponse> {
+): Promise<ChatResponse> {
   const response = await fetch(CHAT_API_URL, {
     method: "POST",
     headers: {
@@ -21,5 +21,5 @@ export async function sendChatMessage(
     throw new Error("聊天接口请求失败，请稍后再试。");
   }
 
-  return response.json() as Promise<ChatApiResponse>;
+  return response.json() as Promise<ChatResponse>;
 }

@@ -5,7 +5,12 @@ import { ChatMessageList } from "../components/chat/ChatMessageList";
 import { ChatPageHeader } from "../components/chat/ChatPageHeader";
 import { NoticePanel } from "../components/chat/NoticePanel";
 import { sendChatMessage } from "../services/chatApi";
-import type { ChatCategory, ChatMessage } from "../types/chat";
+import type {
+  ChatCategory,
+  ChatMessage,
+  ChatSource,
+  Reference
+} from "../types/chat";
 
 const initialMessage: ChatMessage = {
   id: "initial-assistant-message",
@@ -14,11 +19,20 @@ const initialMessage: ChatMessage = {
     "您好，我是 Student Support AI。\n我可以帮助您查询在日留学生生活相关信息。\n请选择咨询分类，或直接输入您的问题。"
 };
 
-function createMessage(role: ChatMessage["role"], content: string): ChatMessage {
+function createMessage(
+  role: ChatMessage["role"],
+  content: string,
+  options?: {
+    source?: ChatSource;
+    references?: Reference[];
+  }
+): ChatMessage {
   return {
     id: `${role}-${Date.now()}-${Math.random().toString(16).slice(2)}`,
     role,
-    content
+    content,
+    source: options?.source,
+    references: options?.references
   };
 }
 
@@ -54,7 +68,10 @@ export function ChatPage() {
 
       setMessages((currentMessages) => [
         ...currentMessages,
-        createMessage("assistant", response.reply)
+        createMessage("assistant", response.reply, {
+          source: response.source,
+          references: response.references
+        })
       ]);
     } catch (error) {
       const message =
