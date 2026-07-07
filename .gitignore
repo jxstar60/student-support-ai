@@ -40,3 +40,16 @@ Thumbs.db
 
 # Docker local overrides
 docker-compose.override.yml
+
+# Accidental Node binaries in project root
+/corepack
+/corepack.cmd
+/install_tools.bat
+/node.exe
+/nodevars.bat
+/npm
+/npm.cmd
+/npm.ps1
+/npx
+/npx.cmd
+/npx.ps1
