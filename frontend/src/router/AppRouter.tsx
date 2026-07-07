@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "../components/layout/Layout";
 import { ChatPage } from "../pages/ChatPage";
+import { DocumentAdminPage } from "../pages/DocumentAdminPage";
 import { EmergencyPage } from "../pages/EmergencyPage";
 import { FAQPage } from "../pages/FAQPage";
 import { DashboardPage } from "../pages/DashboardPage";
@@ -30,6 +31,7 @@ export function AppRouter() {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/admin/knowledge" element={<KnowledgeAdminPage />} />
           <Route path="/admin/dashboard" element={<DashboardPage />} />
+          <Route path="/admin/documents" element={<DocumentAdminPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -19,6 +19,9 @@ htmlcov/
 backend/.env
 *.db
 backend/app/data/app.db
+backend/app/data/uploads/
+*.pdf
+*.txt
 *.sqlite
 *.sqlite3
 

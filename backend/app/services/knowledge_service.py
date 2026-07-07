@@ -38,7 +38,7 @@ def load_knowledge_base() -> dict[str, list[KnowledgeRecord]]:
     knowledge_base: dict[str, list[KnowledgeRecord]] = {}
 
     for file_path in sorted(KNOWLEDGE_DIR.glob("*.json")):
-        with file_path.open("r", encoding="utf-8") as file:
+        with file_path.open("r", encoding="utf-8-sig") as file:
             knowledge_base[file_path.name] = json.load(file)
 
     return knowledge_base
@@ -196,7 +196,7 @@ def _file_name_for_category(category: str) -> str:
 
 def _read_file(file_name: str) -> list[KnowledgeRecord]:
     file_path = KNOWLEDGE_DIR / file_name
-    with file_path.open("r", encoding="utf-8") as file:
+    with file_path.open("r", encoding="utf-8-sig") as file:
         return json.load(file)
 
 

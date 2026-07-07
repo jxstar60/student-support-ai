@@ -35,6 +35,12 @@ export function Footer() {
             知识库管理
           </Link>
           <Link
+            to="/admin/documents"
+            className="font-semibold text-white hover:underline"
+          >
+            资料导入
+          </Link>
+          <Link
             to="/admin/dashboard"
             className="font-semibold text-white hover:underline"
           >
