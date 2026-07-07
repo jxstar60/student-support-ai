@@ -1,6 +1,7 @@
+import API_BASE_URL from "../config/api";
 import type { DashboardStats } from "../types/dashboard";
 
-const DASHBOARD_API_URL = "http://127.0.0.1:8000/api/admin/dashboard";
+const DASHBOARD_API_URL = `${API_BASE_URL}/api/admin/dashboard`;
 
 export async function fetchDashboardStats(): Promise<DashboardStats> {
   const response = await fetch(DASHBOARD_API_URL);

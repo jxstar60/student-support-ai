@@ -1,14 +1,15 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "../components/layout/Layout";
 import { ChatPage } from "../pages/ChatPage";
+import { DashboardPage } from "../pages/DashboardPage";
 import { DocumentAdminPage } from "../pages/DocumentAdminPage";
 import { EmergencyPage } from "../pages/EmergencyPage";
 import { FAQPage } from "../pages/FAQPage";
-import { DashboardPage } from "../pages/DashboardPage";
 import { HomePage } from "../pages/HomePage";
 import { InsurancePage } from "../pages/InsurancePage";
 import { KnowledgeAdminPage } from "../pages/KnowledgeAdminPage";
 import { LifeGuidePage } from "../pages/LifeGuidePage";
+import { NotFoundPage } from "../pages/NotFoundPage";
 import { ScholarshipPage } from "../pages/ScholarshipPage";
 import { SchoolPage } from "../pages/SchoolPage";
 import { VisaPage } from "../pages/VisaPage";
@@ -32,6 +33,8 @@ export function AppRouter() {
           <Route path="/admin/knowledge" element={<KnowledgeAdminPage />} />
           <Route path="/admin/dashboard" element={<DashboardPage />} />
           <Route path="/admin/documents" element={<DocumentAdminPage />} />
+          <Route path="/not-found" element={<NotFoundPage />} />
+          <Route path="*" element={<Navigate to="/not-found" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>

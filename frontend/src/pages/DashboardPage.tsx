@@ -5,10 +5,13 @@ import type { DashboardStats } from "../types/dashboard";
 const emptyStats: DashboardStats = {
   total_sessions: 0,
   total_messages: 0,
+  total_knowledge: 0,
+  total_documents: 0,
   total_feedback: 0,
   positive_feedback: 0,
   negative_feedback: 0,
-  category_stats: []
+  category_stats: [],
+  recent_sessions: []
 };
 
 export function DashboardPage() {
@@ -38,6 +41,8 @@ export function DashboardPage() {
   const cards = [
     { label: "总咨询数", value: stats.total_sessions },
     { label: "总消息数", value: stats.total_messages },
+    { label: "知识库条目数", value: stats.total_knowledge },
+    { label: "上传文档数", value: stats.total_documents },
     { label: "反馈数", value: stats.total_feedback },
     { label: "好评数", value: stats.positive_feedback },
     { label: "差评数", value: stats.negative_feedback }
@@ -54,8 +59,12 @@ export function DashboardPage() {
             数据统计
           </h1>
           <p className="mt-3 text-sm leading-6 text-slate-600">
-            展示本地演示环境中的咨询会话、消息和反馈情况。
+            展示本地演示环境中的咨询会话、知识库、上传资料和用户反馈情况。
           </p>
+        </div>
+
+        <div className="mb-6 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800">
+          当前为开发演示版本，后台管理功能暂未设置登录权限。
         </div>
 
         {errorMessage ? (
@@ -64,7 +73,7 @@ export function DashboardPage() {
           </div>
         ) : null}
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((card) => (
             <article
               key={card.label}
@@ -106,6 +115,47 @@ export function DashboardPage() {
                       {item.category}
                     </td>
                     <td className="px-4 py-4 text-slate-700">{item.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section className="mt-6 overflow-hidden rounded-lg border border-slate-200 bg-white">
+          <div className="border-b border-slate-200 px-4 py-3">
+            <h2 className="text-base font-semibold text-slate-950">
+              最近 5 条咨询记录
+            </h2>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-slate-200 text-left text-sm">
+              <thead className="bg-slate-50 text-xs font-semibold uppercase text-slate-600">
+                <tr>
+                  <th className="px-4 py-3">标题</th>
+                  <th className="px-4 py-3">创建时间</th>
+                  <th className="px-4 py-3">更新时间</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {stats.recent_sessions.length === 0 ? (
+                  <tr>
+                    <td className="px-4 py-6 text-slate-500" colSpan={3}>
+                      暂无咨询记录。
+                    </td>
+                  </tr>
+                ) : null}
+                {stats.recent_sessions.map((session) => (
+                  <tr key={session.id}>
+                    <td className="px-4 py-4 font-semibold text-slate-950">
+                      {session.title}
+                    </td>
+                    <td className="px-4 py-4 text-slate-600">
+                      {new Date(session.created_at).toLocaleString()}
+                    </td>
+                    <td className="px-4 py-4 text-slate-600">
+                      {new Date(session.updated_at ?? session.created_at).toLocaleString()}
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -6,6 +6,22 @@ type DocumentListProps = {
   onDelete: (filename: string) => void;
 };
 
+function formatFileSize(size: number): string {
+  if (!size) {
+    return "-";
+  }
+
+  if (size < 1024) {
+    return `${size} B`;
+  }
+
+  if (size < 1024 * 1024) {
+    return `${(size / 1024).toFixed(1)} KB`;
+  }
+
+  return `${(size / 1024 / 1024).toFixed(1)} MB`;
+}
+
 export function DocumentList({
   documents,
   isLoading,
@@ -26,6 +42,7 @@ export function DocumentList({
               <th className="px-4 py-3">文件名</th>
               <th className="px-4 py-3">分类</th>
               <th className="px-4 py-3">来源机构</th>
+              <th className="px-4 py-3">文件大小</th>
               <th className="px-4 py-3">导入条数</th>
               <th className="px-4 py-3">上传时间</th>
               <th className="px-4 py-3">操作</th>
@@ -34,14 +51,14 @@ export function DocumentList({
           <tbody className="divide-y divide-slate-100 bg-white">
             {isLoading ? (
               <tr>
-                <td className="px-4 py-6 text-slate-500" colSpan={6}>
+                <td className="px-4 py-6 text-slate-500" colSpan={7}>
                   正在加载文件列表...
                 </td>
               </tr>
             ) : null}
             {!isLoading && documents.length === 0 ? (
               <tr>
-                <td className="px-4 py-6 text-slate-500" colSpan={6}>
+                <td className="px-4 py-6 text-slate-500" colSpan={7}>
                   暂无上传文件。
                 </td>
               </tr>
@@ -57,6 +74,9 @@ export function DocumentList({
                     </td>
                     <td className="px-4 py-4 text-slate-700">
                       {document.source_name}
+                    </td>
+                    <td className="px-4 py-4 text-slate-700">
+                      {formatFileSize(document.file_size)}
                     </td>
                     <td className="px-4 py-4 text-slate-700">
                       {document.chunks_created}

@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config/api";
 import type {
   ChatResponse,
   ChatSession,
@@ -6,7 +7,17 @@ import type {
   SendChatMessageParams
 } from "../types/chat";
 
-const CHAT_API_BASE_URL = "http://127.0.0.1:8000/api/chat";
+const CHAT_API_BASE_URL = `${API_BASE_URL}/api/chat`;
+const SERVICE_UNAVAILABLE_MESSAGE =
+  "当前服务暂时不可用，请确认后端服务是否已启动。";
+
+async function getErrorMessage(
+  response: Response,
+  fallback: string
+): Promise<string> {
+  const error = await response.json().catch(() => null);
+  return typeof error?.detail === "string" ? error.detail : fallback;
+}
 
 export async function createChatSession(): Promise<ChatSession> {
   const response = await fetch(`${CHAT_API_BASE_URL}/sessions`, {
@@ -14,7 +25,7 @@ export async function createChatSession(): Promise<ChatSession> {
   });
 
   if (!response.ok) {
-    throw new Error("新建咨询失败。");
+    throw new Error(await getErrorMessage(response, "新建咨询失败。"));
   }
 
   return response.json() as Promise<ChatSession>;
@@ -24,7 +35,7 @@ export async function fetchChatSessions(): Promise<ChatSession[]> {
   const response = await fetch(`${CHAT_API_BASE_URL}/sessions`);
 
   if (!response.ok) {
-    throw new Error("聊天历史获取失败。");
+    throw new Error(await getErrorMessage(response, "聊天历史获取失败。"));
   }
 
   return response.json() as Promise<ChatSession[]>;
@@ -36,7 +47,7 @@ export async function fetchChatSession(
   const response = await fetch(`${CHAT_API_BASE_URL}/sessions/${sessionId}`);
 
   if (!response.ok) {
-    throw new Error("聊天记录获取失败。");
+    throw new Error(await getErrorMessage(response, "聊天记录获取失败。"));
   }
 
   return response.json() as Promise<ChatSessionDetail>;
@@ -48,31 +59,38 @@ export async function deleteChatSession(sessionId: string): Promise<void> {
   });
 
   if (!response.ok) {
-    throw new Error("聊天会话删除失败。");
+    throw new Error(await getErrorMessage(response, "聊天会话删除失败。"));
   }
 }
 
 export async function sendChatMessage(
   params: SendChatMessageParams
 ): Promise<ChatResponse> {
-  const response = await fetch(CHAT_API_BASE_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: params.message,
-      category: params.category,
-      language: params.language,
-      session_id: params.session_id
-    })
-  });
+  try {
+    const response = await fetch(CHAT_API_BASE_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: params.message,
+        category: params.category,
+        language: params.language,
+        session_id: params.session_id
+      })
+    });
 
-  if (!response.ok) {
-    throw new Error("聊天接口请求失败，请稍后再试。");
+    if (!response.ok) {
+      throw new Error(await getErrorMessage(response, SERVICE_UNAVAILABLE_MESSAGE));
+    }
+
+    return response.json() as Promise<ChatResponse>;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error(SERVICE_UNAVAILABLE_MESSAGE);
   }
-
-  return response.json() as Promise<ChatResponse>;
 }
 
 export async function submitFeedback(
@@ -87,7 +105,7 @@ export async function submitFeedback(
   });
 
   if (!response.ok) {
-    throw new Error("反馈提交失败。");
+    throw new Error(await getErrorMessage(response, "反馈提交失败。"));
   }
 
   return response.json() as Promise<{ success: boolean }>;

@@ -21,6 +21,9 @@ import type {
   Reference
 } from "../types/chat";
 
+const SERVICE_UNAVAILABLE_MESSAGE =
+  "当前服务暂时不可用，请确认后端服务是否已启动。";
+
 const initialMessage: ChatMessage = {
   id: "initial-assistant-message",
   session_id: "",
@@ -74,10 +77,8 @@ export function ChatPage() {
     try {
       const result = await fetchChatSessions();
       setSessions(result);
-    } catch (error) {
-      setErrorMessage(
-        error instanceof Error ? error.message : "聊天历史加载失败。"
-      );
+    } catch {
+      setErrorMessage(SERVICE_UNAVAILABLE_MESSAGE);
     } finally {
       setIsHistoryLoading(false);
     }
@@ -95,8 +96,8 @@ export function ChatPage() {
       setMessages([{ ...initialMessage, created_at: new Date().toISOString() }]);
       setFeedbackStatus({});
       await loadSessions();
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "新建咨询失败。");
+    } catch {
+      setErrorMessage(SERVICE_UNAVAILABLE_MESSAGE);
     }
   }
 
@@ -111,8 +112,8 @@ export function ChatPage() {
           : [{ ...initialMessage, session_id: session.id }]
       );
       setFeedbackStatus({});
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "聊天记录获取失败。");
+    } catch {
+      setErrorMessage(SERVICE_UNAVAILABLE_MESSAGE);
     }
   }
 
@@ -132,8 +133,8 @@ export function ChatPage() {
       }
 
       await loadSessions();
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "聊天会话删除失败。");
+    } catch {
+      setErrorMessage(SERVICE_UNAVAILABLE_MESSAGE);
     }
   }
 
@@ -170,31 +171,31 @@ export function ChatPage() {
           sessionId: response.session_id,
           messageId: response.message_id,
           source: response.source,
-          references: response.references,
+          references: response.references.slice(0, 3),
           category: selectedCategory
         })
       ]);
       await loadSessions();
-    } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : "请求失败，请确认后端服务是否正在运行。";
-      setErrorMessage(message);
+    } catch {
+      setErrorMessage(SERVICE_UNAVAILABLE_MESSAGE);
     } finally {
       setIsLoading(false);
     }
   }
 
   async function handleFeedback(messageId: string, rating: "up" | "down") {
+    if (feedbackStatus[messageId]) {
+      return;
+    }
+
     try {
       await submitFeedback({ message_id: messageId, rating, comment: "" });
       setFeedbackStatus((currentStatus) => ({
         ...currentStatus,
         [messageId]: rating
       }));
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : "反馈提交失败。");
+    } catch {
+      setErrorMessage("反馈提交失败，请稍后再试。");
     }
   }
 

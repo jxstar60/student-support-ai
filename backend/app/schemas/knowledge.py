@@ -8,6 +8,7 @@ class KnowledgeBase(BaseModel):
     source_name: str = Field(..., min_length=1)
     source_url: str = Field(..., min_length=1)
     keywords: list[str] = Field(default_factory=list)
+    document_filename: str | None = None
 
 
 class KnowledgeCreate(KnowledgeBase):

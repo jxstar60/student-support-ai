@@ -4,7 +4,7 @@ export function SchoolPage() {
   return (
     <PagePlaceholder
       title="学校生活"
-      description="面向课程、学籍、出席、校园资源和国际交流窗口的信息导航。"
+      description="提供学校窗口、成绩证明、出席管理、学业咨询等校园生活信息。"
     />
   );
 }

@@ -60,6 +60,11 @@ export function KnowledgeTable({
                       <p className="mt-1 line-clamp-2 text-xs leading-5 text-slate-600">
                         {item.content}
                       </p>
+                      {item.document_filename ? (
+                        <p className="mt-2 text-xs text-slate-500">
+                          来源文件：{item.document_filename}
+                        </p>
+                      ) : null}
                     </td>
                     <td className="whitespace-nowrap px-4 py-4 text-slate-700">
                       {item.source_name}

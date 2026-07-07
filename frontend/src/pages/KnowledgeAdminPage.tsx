@@ -57,7 +57,7 @@ export function KnowledgeAdminPage() {
   }
 
   async function handleDelete(item: KnowledgeItem) {
-    if (!window.confirm(`确认删除「${item.title}」吗？`)) {
+    if (!window.confirm(`确认删除“${item.title}”吗？`)) {
       return;
     }
 
@@ -82,7 +82,7 @@ export function KnowledgeAdminPage() {
             知识库管理
           </h1>
           <p className="mt-3 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-            当前为开发演示版本，知识库管理功能暂未设置登录权限。
+            当前为开发演示版本，后台管理功能暂未设置登录权限。
           </p>
         </div>
 

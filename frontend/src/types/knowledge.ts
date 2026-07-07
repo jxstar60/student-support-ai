@@ -6,6 +6,7 @@ export type KnowledgeItem = {
   source_name: string;
   source_url: string;
   keywords: string[];
+  document_filename?: string | null;
 };
 
 export type KnowledgePayload = {
@@ -16,4 +17,5 @@ export type KnowledgePayload = {
   source_name: string;
   source_url: string;
   keywords: string[];
+  document_filename?: string | null;
 };

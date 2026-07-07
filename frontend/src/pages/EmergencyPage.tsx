@@ -4,7 +4,7 @@ export function EmergencyPage() {
   return (
     <PagePlaceholder
       title="紧急支援"
-      description="预留灾害、事故、疾病、遗失证件等紧急场景的信息入口。"
+      description="整理事故、疾病、灾害、心理压力等紧急场景下的求助渠道。"
     />
   );
 }

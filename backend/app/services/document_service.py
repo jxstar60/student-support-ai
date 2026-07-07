@@ -7,13 +7,18 @@ from uuid import uuid4
 
 import fitz
 
+from app.core.config import settings
 from app.schemas.document import UploadedDocument
 from app.schemas.knowledge import KnowledgeCreate
-from app.services.knowledge_service import CATEGORY_FILES, create_knowledge
+from app.services.knowledge_service import (
+    CATEGORY_FILES,
+    create_knowledge,
+    delete_knowledge_by_document,
+)
 
 logger = logging.getLogger(__name__)
 
-UPLOAD_DIR = Path(__file__).resolve().parents[1] / "data" / "uploads"
+UPLOAD_DIR = settings.upload_dir
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 DOCUMENTS_METADATA_PATH = UPLOAD_DIR / "documents.json"
 MAX_UPLOAD_SIZE = 10 * 1024 * 1024
@@ -104,6 +109,7 @@ def import_document(
                 source_name=normalized_source_name,
                 source_url=normalized_source_url,
                 keywords=keywords,
+                document_filename=saved_path.name,
             )
         )
 
@@ -113,6 +119,7 @@ def import_document(
         "source_name": normalized_source_name,
         "chunks_created": len(chunks),
         "uploaded_at": datetime.now(timezone.utc).isoformat(),
+        "file_size": file_size,
     }
     _append_metadata(metadata)
 
@@ -131,6 +138,7 @@ def import_document(
         "filename": saved_path.name,
         "category": normalized_category,
         "chunks_created": len(chunks),
+        "file_size": file_size,
     }
 
 
@@ -142,7 +150,11 @@ def list_uploaded_documents() -> list[UploadedDocument]:
     ]
 
 
-def delete_uploaded_document(filename: str) -> None:
+def count_uploaded_documents() -> int:
+    return len(list_uploaded_documents())
+
+
+def delete_uploaded_document(filename: str) -> int:
     safe_filename = Path(filename).name
     file_path = UPLOAD_DIR / safe_filename
 
@@ -153,9 +165,10 @@ def delete_uploaded_document(filename: str) -> None:
     metadata = [
         record
         for record in _read_metadata()
-        if record["filename"] != safe_filename
+        if record.get("filename") != safe_filename
     ]
     _write_metadata(metadata)
+    return delete_knowledge_by_document(safe_filename)
 
 
 def split_text_into_chunks(text: str) -> list[str]:
@@ -227,7 +240,7 @@ def _read_pdf(file_path: Path) -> str:
 
     text = "\n\n".join(page for page in pages if page)
     if not text.strip():
-        raise ValueError("PDF 无法解析文本，可能是扫描件或图片型 PDF")
+        raise ValueError("该 PDF 可能是扫描图片版，当前版本暂不支持 OCR。")
     return text
 
 

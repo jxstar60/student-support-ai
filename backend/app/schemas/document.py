@@ -8,6 +8,7 @@ class DocumentUploadResponse(BaseModel):
     filename: str
     category: str
     chunks_created: int
+    file_size: int
 
 
 class UploadedDocument(BaseModel):
@@ -16,3 +17,4 @@ class UploadedDocument(BaseModel):
     source_name: str
     chunks_created: int
     uploaded_at: datetime
+    file_size: int = 0

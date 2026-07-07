@@ -1,10 +1,19 @@
+import API_BASE_URL from "../config/api";
 import type {
   DocumentUploadPayload,
   DocumentUploadResponse,
   UploadedDocument
 } from "../types/document";
 
-const DOCUMENT_API_URL = "http://127.0.0.1:8000/api/documents";
+const DOCUMENT_API_URL = `${API_BASE_URL}/api/documents`;
+
+async function getErrorMessage(
+  response: Response,
+  fallback: string
+): Promise<string> {
+  const error = await response.json().catch(() => null);
+  return typeof error?.detail === "string" ? error.detail : fallback;
+}
 
 export async function uploadDocument(
   payload: DocumentUploadPayload
@@ -22,9 +31,7 @@ export async function uploadDocument(
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => null);
-    const detail =
-      typeof error?.detail === "string" ? error.detail : "资料上传失败";
+    const detail = await getErrorMessage(response, "资料上传失败");
     throw new Error(`上传失败：${detail}`);
   }
 
@@ -50,6 +57,6 @@ export async function deleteDocument(filename: string): Promise<void> {
   );
 
   if (!response.ok) {
-    throw new Error("上传文件删除失败。");
+    throw new Error(await getErrorMessage(response, "上传文件删除失败。"));
   }
 }

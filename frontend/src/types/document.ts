@@ -4,6 +4,7 @@ export type UploadedDocument = {
   source_name: string;
   chunks_created: number;
   uploaded_at: string;
+  file_size: number;
 };
 
 export type DocumentUploadPayload = {
@@ -19,4 +20,5 @@ export type DocumentUploadResponse = {
   filename: string;
   category: string;
   chunks_created: number;
+  file_size: number;
 };

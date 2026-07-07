@@ -18,7 +18,8 @@ const emptyForm: KnowledgePayload = {
   content: "",
   source_name: "",
   source_url: "",
-  keywords: []
+  keywords: [],
+  document_filename: null
 };
 
 type KnowledgeFormProps = {
@@ -141,6 +142,12 @@ export function KnowledgeForm({
             className="rounded-md border border-slate-300 px-3 py-2 text-sm outline-none focus:border-[#0b3a6f] focus:ring-2 focus:ring-[#0b3a6f]/15"
           />
         </label>
+
+        {formValue.document_filename ? (
+          <p className="rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
+            来源文件：{formValue.document_filename}
+          </p>
+        ) : null}
 
         <div className="flex flex-wrap gap-3">
           <button

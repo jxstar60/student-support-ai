@@ -1,20 +1,28 @@
 from functools import lru_cache
+from pathlib import Path
 
+from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Settings(BaseSettings):
-    """Application settings loaded from environment variables."""
+BASE_DIR = Path(__file__).resolve().parents[1]
 
-    app_name: str = "student-support-ai"
+
+class Settings(BaseSettings):
+    """Application settings loaded from backend/.env or environment variables."""
+
+    app_name: str = "Student Support AI"
     app_version: str = "0.1.0"
     environment: str = "development"
-    database_url: str = "sqlite:///./student_support_ai.db"
+    database_url: str = f"sqlite:///{(BASE_DIR / 'data' / 'app.db').as_posix()}"
+    cors_origins_raw: str = Field(
+        default="http://127.0.0.1:5173,http://localhost:5173",
+        validation_alias=AliasChoices("CORS_ORIGINS", "BACKEND_CORS_ORIGINS"),
+    )
+    data_dir: Path = BASE_DIR / "data"
+    upload_dir: Path = BASE_DIR / "data" / "uploads"
     openai_api_key: str | None = None
     openai_model: str = "gpt-4o-mini"
-    backend_cors_origins: str = (
-        "http://localhost:5173,http://127.0.0.1:5173"
-    )
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -26,7 +34,7 @@ class Settings(BaseSettings):
     def cors_origins(self) -> list[str]:
         return [
             origin.strip()
-            for origin in self.backend_cors_origins.split(",")
+            for origin in self.cors_origins_raw.split(",")
             if origin.strip()
         ]
 

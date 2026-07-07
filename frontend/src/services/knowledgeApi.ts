@@ -1,11 +1,20 @@
+import API_BASE_URL from "../config/api";
 import type { KnowledgeItem, KnowledgePayload } from "../types/knowledge";
 
-const KNOWLEDGE_API_URL = "http://127.0.0.1:8000/api/knowledge";
+const KNOWLEDGE_API_URL = `${API_BASE_URL}/api/knowledge`;
 
 type FetchKnowledgeListParams = {
   category?: string;
   keyword?: string;
 };
+
+async function getErrorMessage(
+  response: Response,
+  fallback: string
+): Promise<string> {
+  const error = await response.json().catch(() => null);
+  return typeof error?.detail === "string" ? error.detail : fallback;
+}
 
 export async function fetchKnowledgeList(
   params: FetchKnowledgeListParams = {}
@@ -26,7 +35,7 @@ export async function fetchKnowledgeList(
   const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error("知识库列表获取失败。");
+    throw new Error(await getErrorMessage(response, "知识库列表获取失败。"));
   }
 
   return response.json() as Promise<KnowledgeItem[]>;
@@ -42,7 +51,7 @@ export async function createKnowledge(
   });
 
   if (!response.ok) {
-    throw new Error("知识新增失败。");
+    throw new Error(await getErrorMessage(response, "知识新增失败。"));
   }
 
   return response.json() as Promise<KnowledgeItem>;
@@ -59,7 +68,7 @@ export async function updateKnowledge(
   });
 
   if (!response.ok) {
-    throw new Error("知识编辑失败。");
+    throw new Error(await getErrorMessage(response, "知识编辑失败。"));
   }
 
   return response.json() as Promise<KnowledgeItem>;
@@ -71,6 +80,6 @@ export async function deleteKnowledge(knowledgeId: string): Promise<void> {
   });
 
   if (!response.ok) {
-    throw new Error("知识删除失败。");
+    throw new Error(await getErrorMessage(response, "知识删除失败。"));
   }
 }

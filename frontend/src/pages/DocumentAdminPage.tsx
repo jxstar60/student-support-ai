@@ -56,13 +56,17 @@ export function DocumentAdminPage() {
   }
 
   async function handleDelete(filename: string) {
-    if (!window.confirm(`确认删除“${filename}”吗？`)) {
+    if (
+      !window.confirm(
+        `确认删除“${filename}”吗？删除后，该文件导入的知识库条目也会同步清理。`
+      )
+    ) {
       return;
     }
 
     try {
       await deleteDocument(filename);
-      setMessage("上传文件已删除。已导入知识库的内容不会自动删除。");
+      setMessage("上传文件已删除，相关知识库条目已同步清理。");
       await loadDocuments();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "文件删除失败。");
@@ -85,7 +89,7 @@ export function DocumentAdminPage() {
         </div>
 
         <div className="mb-6 rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800">
-          当前为开发演示版本。请只上传公开资料或自己有权使用的资料。上传内容会被解析并写入本地知识库。
+          当前为开发演示版本，后台管理功能暂未设置登录权限。请只上传公开资料或自己有权使用的资料。
         </div>
 
         {message ? (

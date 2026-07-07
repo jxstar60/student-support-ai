@@ -19,25 +19,27 @@ export function ChatHistorySidebar({
   onDeleteSession
 }: ChatHistorySidebarProps) {
   return (
-    <aside className="rounded-lg border border-slate-200 bg-white p-4">
-      <div className="flex items-center justify-between gap-3">
+    <aside className="flex max-h-[calc(100vh-8rem)] flex-col rounded-lg border border-slate-200 bg-white p-4">
+      <div className="grid gap-3">
         <h2 className="text-base font-semibold text-slate-950">聊天历史</h2>
         <button
           type="button"
           onClick={onCreateSession}
-          className="rounded-md bg-[#0b3a6f] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#082d58]"
+          className="rounded-md bg-[#0b3a6f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#082d58]"
         >
           新建咨询
         </button>
       </div>
 
-      <div className="mt-4 grid gap-2">
+      <div className="mt-4 grid gap-2 overflow-y-auto pr-1">
         {isLoading ? (
           <p className="text-sm text-slate-500">正在加载历史...</p>
         ) : null}
 
         {!isLoading && sessions.length === 0 ? (
-          <p className="text-sm text-slate-500">暂无聊天历史。</p>
+          <p className="rounded-md border border-dashed border-slate-300 bg-slate-50 px-3 py-4 text-sm text-slate-500">
+            暂无聊天历史。
+          </p>
         ) : null}
 
         {sessions.map((session) => {

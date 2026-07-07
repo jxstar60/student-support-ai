@@ -22,7 +22,7 @@ export function ChatMessageList({
   }, [messages, isLoading]);
 
   return (
-    <div className="h-[28rem] overflow-y-auto border-y border-slate-200 bg-slate-50 px-4 py-5">
+    <div className="h-[min(34rem,calc(100vh-18rem))] min-h-[28rem] overflow-y-auto border-y border-slate-200 bg-slate-50 px-4 py-5">
       <div className="space-y-4">
         {messages.map((message) => (
           <ChatMessageBubble
